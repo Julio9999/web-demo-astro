@@ -1,0 +1,14 @@
+---
+import { SideMenu } from "./side-menu";
+---
+
+
+<nav class="flex justify-between items-center px-5 py-4 border-b border-[#414581]">
+  <p class="text-[#414581] font-bold text-lg">Logo</p>
+  <ul class="hidden md:flex gap-10 text-[#414581]">
+    <li class="cursor-pointer hover:opacity-85">Acerca de</li>
+    <li class="cursor-pointer hover:opacity-85">Menú</li>
+    <li class="cursor-pointer hover:opacity-85">Contáctanos</li>
+  </ul>
+  <SideMenu client:load />
+</nav>
