@@ -1,0 +1,30 @@
+---
+import ProductCard from './product-card.astro';
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+  description?: string;
+}
+
+// Ejemplo de productos, puede venir de un fetch o archivo JSON
+const products: Product[] = [
+  { id: 1, name: 'Torta de Chocolate', price: 25, image: './../src/assets/torta.jpg', description: 'Deliciosa torta de chocolate con crema' },
+  { id: 2, name: 'Cupcake Vainilla', price: 5, image: './../src/assets/torta.jpg', description: 'Pequeño y delicioso' },
+  { id: 3, name: 'Torta de Frutillla', price: 12, image: './../src/assets/torta.jpg' },
+];
+---
+
+<section class="py-12 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-bold text-gray-800 mb-8">Nuestros Productos</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {products.map(product => (
+        <ProductCard product={product} key={product.id} />
+      ))}
+    </div>
+  </div>
+</section>
