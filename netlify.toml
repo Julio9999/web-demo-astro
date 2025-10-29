@@ -1,5 +1,5 @@
 [build]
-  command = "bun astro build"
+  command = "bun astro build --remote"
   publish = "dist"
 
 [build.secretsScan]
