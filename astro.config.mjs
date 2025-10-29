@@ -1,6 +1,7 @@
 // @ts-check
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
+import netfily from '@astrojs/netlify'
 
 import solidJs from '@astrojs/solid-js';
 
@@ -13,4 +14,6 @@ export default defineConfig({
   },
 
   integrations: [solidJs(), db()],
+  output: 'server',
+  adapter: netfily()
 });
