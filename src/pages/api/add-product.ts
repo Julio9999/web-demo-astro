@@ -13,12 +13,14 @@ export const POST = async ({ request }: { request: Request }) => {
     return new Response("Faltan campos obligatorios", { status: 400 });
   }
 
-  await db.insert(Product).values({
+  const response = await db.insert(Product).values({
     name,
     price,
     image,
     description,
   });
+
+  console.log(response)
 
   return new Response(null, {
     status: 200,
