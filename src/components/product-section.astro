@@ -1,13 +1,18 @@
 ---
-import { Product } from 'astro:db';
+import type { Product } from '../interfaces/product/product.interface';
 import ProductCard from './product-card.astro';
 
-import { db } from 'astro:db';
+let products: Product[] = [];
 
-const products = await db.select().from(Product);
-
+try {
+  const res = await fetch(`${Astro.site}/api/products`);
+  if (res.ok) {
+    products = await res.json();
+  }
+} catch (err) {
+  console.error("Error fetching products:", err);
+}
 ---
-
 <section class="py-12 bg-gray-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <h2 class="text-3xl font-bold text-gray-800 mb-8">Nuestros Productos</h2>
