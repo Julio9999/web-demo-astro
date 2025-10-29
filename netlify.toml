@@ -1,0 +1,6 @@
+[build]
+  command = "bun astro build --remote"
+  publish = "dist"
+
+[build.secretsScan]
+  omitKeys = ["ASTRO_DB_REMOTE_URL"]
