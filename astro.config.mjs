@@ -14,6 +14,5 @@ export default defineConfig({
   },
 
   integrations: [solidJs(), db()],
-  output: 'server',
   adapter: netfily()
 });
