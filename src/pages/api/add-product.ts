@@ -21,7 +21,6 @@ export const POST = async ({ request }: { request: Request }) => {
   });
 
   return new Response(null, {
-    status: 303,
-    headers: { Location: "/" }, // redirige tras crear
+    status: 200,
   });
 };
