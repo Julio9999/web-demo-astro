@@ -3,4 +3,4 @@
   publish = "dist"
 
 [build.secretsScan]
-  omitKeys = ["ASTRO_DB_REMOTE_URL"]
+  enabled = false
