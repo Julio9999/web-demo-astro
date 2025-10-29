@@ -1,12 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  image: string;
-  description?: string;
-}
+import type { Product } from '../interfaces/product/product.interface';
+
 
 const { product } = Astro.props as { product: Product };
 import myImage from '../assets/torta.jpg';
