@@ -27,5 +27,5 @@ const Product = defineTable({
 
 
 export default defineDb({
-  tables: { Comment, Author, Product }
+  tables: { Comment, Author, Product },
 });
