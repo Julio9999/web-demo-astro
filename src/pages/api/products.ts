@@ -1,4 +1,5 @@
 // src/pages/api/products.ts
+export const prerender = false;
 import { db, Product } from "astro:db";
 
 export async function get() {
