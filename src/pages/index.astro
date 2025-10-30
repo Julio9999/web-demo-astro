@@ -3,11 +3,17 @@ import Footer from '../components/footer.astro';
 import ProductSection from '../components/product-section.astro';
 import Layout from '../layouts/Layout.astro';
 import "../styles/global.css";
+
+const currentTime = new Date().toLocaleTimeString();
+
+// Set Cache-Control headers for CDN caching
+Astro.response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=30');
 ---
 
 <Layout>
 	<main class="flex-1">
 		<ProductSection />
+		<h1>The current time is: {currentTime}</h1>
 	</main>
 	<Footer />
 </Layout>
