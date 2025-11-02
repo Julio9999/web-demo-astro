@@ -1,5 +1,6 @@
 export const prerender = false;
 import { db, Product } from "astro:db";
+import { purgeCache } from "@netlify/functions";
 
 export const POST = async ({ request }: { request: Request }) => {
   const formData = await request.formData();
@@ -20,7 +21,7 @@ export const POST = async ({ request }: { request: Request }) => {
     description,
   });
 
-  console.log(response)
+  await purgeCache({ tags: ["products"] });
 
   return new Response(null, {
     status: 200,
