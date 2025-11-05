@@ -1,29 +1,70 @@
 export const prerender = false;
+
+import type { APIRoute } from "astro";
+import ImageKit from "imagekit";
 import { db, Product } from "astro:db";
 import { purgeCache } from "@netlify/functions";
 
-export const POST = async ({ request }: { request: Request }) => {
-  const formData = await request.formData();
+const imagekit = new ImageKit({
+  publicKey: import.meta.env.IMAGEKIT_PUBLIC_KEY,
+  privateKey: import.meta.env.IMAGEKIT_PRIVATE_KEY,
+  urlEndpoint: import.meta.env.IMAGEKIT_URL_ENDPOINT,
+});
 
-  const name = formData.get("name") as string;
-  const price = Number(formData.get("price"));
-  const image = formData.get("image") as string;
-  const description = formData.get("description") as string | null;
+export const POST: APIRoute = async ({ request }) => {
+  try {
+    const formData = await request.formData();
 
-  if (!name || !price || !image) {
-    return new Response("Faltan campos obligatorios", { status: 400 });
+    const name = formData.get("name") as string;
+    const price = Number(formData.get("price"));
+    const description = (formData.get("description") as string) || null;
+    const imageFile = formData.get("image") as File | null;
+
+    if (!name || !price || !imageFile) {
+      return new Response(JSON.stringify({ error: "Faltan campos obligatorios" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    const buffer = Buffer.from(await imageFile.arrayBuffer());
+    const base64 = buffer.toString("base64");
+
+    const uploadResponse = await imagekit.upload({
+      file: base64,
+      fileName: imageFile.name,
+      folder: "/uploads",
+    });
+
+    await db.insert(Product).values({
+      name,
+      price,
+      image: uploadResponse.url,
+      description,
+    });
+
+    await purgeCache({ tags: ["products"] });
+
+    return new Response(
+      JSON.stringify({
+        message: "Producto creado correctamente",
+        imageUrl: uploadResponse.url,
+      }),
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+  } catch (err: any) {
+    console.error("❌ Error al procesar producto:", err);
+    return new Response(
+      JSON.stringify({
+        error: err.message || "Error interno del servidor",
+      }),
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   }
-
-  const response = await db.insert(Product).values({
-    name,
-    price,
-    image,
-    description,
-  });
-
-  await purgeCache({ tags: ["products"] });
-
-  return new Response(null, {
-    status: 200,
-  });
 };

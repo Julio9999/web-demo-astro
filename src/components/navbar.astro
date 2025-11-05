@@ -1,11 +1,13 @@
 ---
-import { SideMenu } from "./side-menu";
+import { SideMenu } from "./solid/side-menu";
 ---
 
 
-<nav class="flex justify-between items-center px-5 py-4 border-b border-[#414581]">
-  <p class="text-[#414581] font-bold text-lg">Logo</p>
-  <ul class="hidden md:flex gap-10 text-[#414581]">
+<nav class="flex justify-between items-center px-5 py-4 border-b border-primary">
+  <p class="text-primary font-bold text-lg">
+    <a href="/" data-astro-prefetch="hover">Logo</a>
+  </p>
+  <ul class="hidden md:flex gap-10 text-primary">
     <li class="cursor-pointer hover:opacity-85">Acerca de</li>
     <li class="cursor-pointer hover:opacity-85">Menú</li>
     <li class="cursor-pointer hover:opacity-85">Contáctanos</li>
