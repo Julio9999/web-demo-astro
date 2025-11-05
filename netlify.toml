@@ -1,5 +1,5 @@
 [build]
-  command = "bun run build"
+  command = "bun run build --remote"
   publish = "dist"
   functions = "netlify/functions"
 
