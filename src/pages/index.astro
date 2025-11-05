@@ -7,10 +7,12 @@ import "../styles/global.css";
 
 const currentTime = new Date().toLocaleTimeString();
 
-Astro.response.headers.set("cache-control", "public, max-age=0, must-revalidate");
+Astro.response.headers.set(
+  "Cache-Control",
+  "public, max-age=0, s-maxage=31536000, stale-while-revalidate=0"
+);
 
-Astro.response.headers.set("netlify-cdn-cache-control", "s-maxage=31536000");
-
+// Header específico de Netlify CDN para cache en el Edge
 Astro.response.headers.set("netlify-cache-tag", "products");
 ---
 
