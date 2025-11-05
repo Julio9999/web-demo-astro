@@ -36,10 +36,12 @@ export const POST: APIRoute = async ({ request }) => {
       folder: "/uploads",
     });
 
+     const optimizedUrl = `${uploadResponse.url}?tr=f-avif,q-80,w-800`;
+
     await db.insert(Product).values({
       name,
       price,
-      image: uploadResponse.url,
+      image: optimizedUrl,
       description,
     });
 
