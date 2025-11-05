@@ -1,9 +1,5 @@
 [build]
-  command = "bun run build --remote"
+  command = "bun astro build --remote"
   publish = "dist"
-  functions = "netlify/functions"
 
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/:splat"
-  status = 200
+
