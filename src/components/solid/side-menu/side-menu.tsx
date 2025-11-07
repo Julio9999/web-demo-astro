@@ -9,7 +9,6 @@ export const SideMenu = () => {
 
   return (
     <>
-      {/* Botón hamburguesa */}
       <button
         class="md:hidden z-50 text-primary hover:opacity-85 transition cursor-pointer"
         onClick={toggleMenu}
@@ -18,7 +17,6 @@ export const SideMenu = () => {
         {isOpen() ? <FiX size={28} /> : <FiMenu size={28} />}
       </button>
 
-      {/* Fondo oscuro */}
       <div
         class={`fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${
           isOpen() ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
@@ -26,7 +24,6 @@ export const SideMenu = () => {
         onClick={closeMenu}
       ></div>
 
-      {/* Menú lateral */}
       <aside
         class={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out ${
           isOpen() ? "translate-x-0" : "-translate-x-full"

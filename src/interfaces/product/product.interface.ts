@@ -5,3 +5,10 @@ export interface Product {
   image: string;
   description?: string;
 }
+
+export interface ProductForm {
+  name: string;
+  price: string;
+  image: File | null;
+  description: string;
+}

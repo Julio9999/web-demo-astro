@@ -2,7 +2,7 @@ export const prerender = false;
 
 import type { APIRoute } from "astro";
 import ImageKit from "imagekit";
-import { db, Product } from "astro:db";
+import { db, Product, ProductImage } from "astro:db";
 import { purgeCache } from "@netlify/functions";
 
 const imagekit = new ImageKit({
@@ -18,31 +18,47 @@ export const POST: APIRoute = async ({ request }) => {
     const name = formData.get("name") as string;
     const price = Number(formData.get("price"));
     const description = (formData.get("description") as string) || null;
-    const imageFile = formData.get("image") as File | null;
 
-    if (!name || !price || !imageFile) {
-      return new Response(JSON.stringify({ error: "Faltan campos obligatorios" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
+    const imageFiles = formData.getAll("image") as File[];
+
+    if (!name || !price || imageFiles.length === 0) {
+      return new Response(
+        JSON.stringify({ error: "Faltan campos obligatorios" }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
     }
 
-    const buffer = Buffer.from(await imageFile.arrayBuffer());
-    const base64 = buffer.toString("base64");
+    const uploadResponses = await Promise.all(
+      imageFiles.map(async (file) => {
+        const buffer = Buffer.from(await file.arrayBuffer());
+        const base64 = buffer.toString("base64");
+        const upload = await imagekit.upload({
+          file: base64,
+          fileName: file.name,
+          folder: "/uploads",
+        });
+        return `${upload.url}?tr=f-avif,q-80,w-800`;
+      })
+    );
 
-    const uploadResponse = await imagekit.upload({
-      file: base64,
-      fileName: imageFile.name,
-      folder: "/uploads",
-    });
+    const [product, images] = await db.transaction(async (tx) => {
+      const [newProduct] = await tx.insert(Product).values({
+        name,
+        price,
+        description,
+      }).returning();
 
-     const optimizedUrl = `${uploadResponse.url}?tr=f-avif,q-80,w-800`;
+      const insertedImages = await tx.insert(ProductImage).values(
+        uploadResponses.map((url) => ({
+          productId: newProduct.id,
+          url,
+        }))
+      ).returning();
 
-    await db.insert(Product).values({
-      name,
-      price,
-      image: optimizedUrl,
-      description,
+      return [newProduct, insertedImages];
     });
 
     await purgeCache({ tags: ["products"] });
@@ -50,7 +66,8 @@ export const POST: APIRoute = async ({ request }) => {
     return new Response(
       JSON.stringify({
         message: "Producto creado correctamente",
-        imageUrl: uploadResponse.url,
+        product,
+        images,
       }),
       {
         status: 200,
@@ -58,7 +75,7 @@ export const POST: APIRoute = async ({ request }) => {
       }
     );
   } catch (err: any) {
-    console.error("❌ Error al procesar producto:", err);
+    console.error(" Error al crear producto:", err);
     return new Response(
       JSON.stringify({
         error: err.message || "Error interno del servidor",

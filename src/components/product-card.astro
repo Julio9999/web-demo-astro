@@ -4,8 +4,9 @@ const { product } = Astro.props as { product: Product };
 ---
 
 <div class="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition p-4 flex flex-col">
-   <img src={product.image}  alt="A description of my image." class="h-52 w-full" />
+   <!-- <img src={JSON.parse(product.image)}  alt="A description of my image." class="h-52 w-full" /> -->
   <h3 class="text-lg font-semibold text-gray-800">{product.name}</h3>
+  <!-- <span>{JSON.parse(product.image)}</span> -->
   {product.description && (
     <p class="text-gray-500 text-sm mt-1">{product.description}</p>
   )}
