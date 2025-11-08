@@ -1,0 +1,11 @@
+---
+export const prerender = false;
+const { id } = Astro.params;
+
+const product = await fetch(`${process.env.BASE_URL}/api/get-product-by-id/${id}`)
+const json = await product.json()
+console.log(json)
+
+
+---
+<p>Pagina del producto {id}</p>
