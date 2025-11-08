@@ -17,8 +17,9 @@ export const ProductRepository = {
       .leftJoin(ProductImage, eq(Product.id, ProductImage.productId))
       .where(eq(Product.id, Number(id)))
       .groupBy(Product.id)
+      .limit(1)
       .then((res) => parseArrayField(res, "images"));
-    return product;
+    return product[0];
   },
 
   async getAllProducts() {

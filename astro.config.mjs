@@ -10,6 +10,7 @@ import db from '@astrojs/db';
 export default defineConfig({
   vite: {
     plugins: [
+      // @ts-expect-error tipo de plugin incompatible por conflicto de versiones
       tailwindcss(),
       
     ],

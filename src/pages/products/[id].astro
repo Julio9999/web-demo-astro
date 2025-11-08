@@ -1,11 +1,41 @@
 ---
+import type { Product } from "@/product/product.interface";
+import Layout from "src/layouts/Layout.astro";
+
 export const prerender = false;
 const { id } = Astro.params;
 
-const product = await fetch(`${process.env.BASE_URL}/api/get-product-by-id/${id}`)
-const json = await product.json()
-console.log(json)
-
-
+const res = await fetch(`${process.env.BASE_URL}/api/get-product-by-id/${id}`);
+const product: Product = await res.json();
 ---
-<p>Pagina del producto {id}</p>
+
+<Layout>
+  <section class="max-w-6xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+    
+    <div class="relative w-full overflow-hidden rounded-2xl shadow-lg">
+      <div class="flex transition-transform duration-500 ease-in-out" style="scroll-snap-type: x mandatory;">
+          <div class="w-full h-96 flex justify-center items-center bg-gray-100 scroll-snap-align-center">
+            <img 
+              src={product.images[0]} 
+              alt={`Imagen  de ${product.name}`} 
+              class="h-full w-full rounded-2xl"
+              loading="lazy"
+            />
+          </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-6">
+      <h1 class="text-3xl font-bold text-gray-900">{product.name}</h1>
+      <p class="text-gray-600 leading-relaxed">{product.description || "Sin descripción disponible."}</p>
+      
+      <div class="text-2xl font-semibold text-primary">
+        ${product.price.toLocaleString("es-ES")}
+      </div>
+
+      <button class="mt-4 bg-primary text-white px-6 py-3 rounded-xl hover:bg-primary/80 transition font-semibold cursor-pointer">
+        Añadir al carrito
+      </button>
+    </div>
+  </section>
+</Layout>
