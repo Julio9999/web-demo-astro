@@ -20,7 +20,7 @@ export default async function() {
 
   await db.insert(ProductImage).values([
     {id: 1, productId: 1, url: "https://ik.imagekit.io/yjgkpb07n/uploads/HB7xXoDRbqh3m7rV4xXo_iStock-472209533_tWjHQTHzv.jpeg?tr=f-avif,q-80,w-800"},
-    {id: 4, productId: 1, url: "https://ik.imagekit.io/yjgkpb07n/uploads/HB7xXoDRbqh3m7rV4xXo_iStock-472209533_tWjHQTHzv.jpeg?tr=f-avif,q-80,w-800"},
+    {id: 4, productId: 1, url: "https://ik.imagekit.io/yjgkpb07n/uploads/5MnBLjKTAiuVGUjgUucA_Moving-to-Ottawa-1150_6ufCOglOQ.jpg?updatedAt=1762381361055?tr=f-avif,q-80,w-800"},
     {id: 2, productId: 2, url: "https://ik.imagekit.io/yjgkpb07n/uploads/HB7xXoDRbqh3m7rV4xXo_iStock-472209533_tWjHQTHzv.jpeg?tr=f-avif,q-80,w-800"},
     {id: 3, productId: 3, url: "https://ik.imagekit.io/yjgkpb07n/uploads/HB7xXoDRbqh3m7rV4xXo_iStock-472209533_tWjHQTHzv.jpeg?tr=f-avif,q-80,w-800"},
   ])
