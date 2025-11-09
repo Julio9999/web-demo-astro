@@ -1,8 +1,9 @@
-import type { ProductForm } from "@/product/product.interface";
 import { createSignal } from "solid-js";
+import { actions } from "astro:actions";
+
+import type { ProductForm } from "@/interfaces/product/product.interface";
 
 export const useAddProductForm = () => {
-
   const [form, setForm] = createSignal<ProductForm>({
     name: "",
     price: "",
@@ -10,9 +11,9 @@ export const useAddProductForm = () => {
     description: "",
   });
 
-  const [isLoading, setIsLoading] = createSignal<boolean>(false)
+  const [isLoading, setIsLoading] = createSignal(false);
 
-  const handleChange = (field: keyof Omit<ProductForm, "image">,value: string) => {
+  const handleChange = (field: keyof Omit<ProductForm, "image">, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -23,35 +24,35 @@ export const useAddProductForm = () => {
   const handleSubmit = async (e: Event) => {
     e.preventDefault();
 
+    const { name, price, image, description } = form();
+    if (!name || !price || !image) return alert("Faltan campos obligatorios");
+
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("price", price);
+    formData.append("description", description || "");
+    formData.append("image", image);
+
     try {
-      const formData = new FormData();
-      formData.append("image", form().image!);
-      formData.append("image", form().image!);
-      formData.append("image", form().image!);
-      formData.append("name", form().name);
-      formData.append("price", form().price);
-      formData.append("description", form().description ?? "");
-      setIsLoading(() => true)
-      const res = await fetch("/api/add-product", {
-        method: "POST",
-        body: formData,
-      });
+      setIsLoading(true);
 
-      if (!res.ok) throw new Error("Error al enviar el formulario");
+      const res = await actions.createProduct(formData); 
+      if (res.error) throw new Error(res.error.message);
 
+      console.log("Producto creado:", res.data);
       setForm({ name: "", price: "", image: null, description: "" });
-      // window.location.href = "/";
     } catch (err) {
-      console.error("Error en validación o envío:", err);
-    } finally{
-        setIsLoading(() => false)
+      console.error("Error al enviar:", err);
+    } finally {
+      setIsLoading(false);
     }
   };
+
   return {
     handleChange,
     handleSubmit,
     handleFileChange,
     form,
-    isLoading
+    isLoading,
   };
 };

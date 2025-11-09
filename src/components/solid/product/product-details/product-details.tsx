@@ -48,7 +48,7 @@ export default function ProductDetail({ product }: Props) {
             <img
               src={img}
               alt={product.name}
-              class="w-full h-96 object-cover flex-shrink-0"
+              class="w-full h-96 object-cover shrink-0"
               loading="lazy"
             />
           ))}

@@ -1,13 +1,20 @@
 ---
-import type { Product } from "@/product/product.interface";
-import ProductImageSlider from "@/solid/product/product-image-slider/produt-image-slider";
+export const prerender = false;
+import ProductImageSlider from "@components/solid/product/product-image-slider/product-image-slider"
+import { ProductRepository } from "@repositories/product/product-repository";
 import Layout from "src/layouts/Layout.astro";
 
-export const prerender = false;
 const { id } = Astro.params;
 
-const res = await fetch(`${process.env.BASE_URL}/api/get-product-by-id/${id}`);
-const product: Product = await res.json();
+const product = await ProductRepository.getProductById(id!);
+
+
+Astro.response.headers.set(
+  "Cache-Control",
+  "public, max-age=0, s-maxage=31536000, stale-while-revalidate=0"
+);
+
+Astro.response.headers.set("netlify-cache-tag", `product/${id}`);
 ---
 
 <Layout>

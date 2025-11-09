@@ -11,7 +11,7 @@ export const ProductRepository = {
         name: Product.name,
         description: Product.description,
         price: Product.price,
-        images: sql<string>`json_group_array(${ProductImage.url})`.as("images"),
+        images: sql<string[]>`json_group_array(${ProductImage.url})`.as("images"),
       })
       .from(Product)
       .leftJoin(ProductImage, eq(Product.id, ProductImage.productId))
@@ -29,7 +29,7 @@ export const ProductRepository = {
         name: Product.name,
         description: Product.description,
         price: Product.price,
-        images: sql<string>`json_group_array(${ProductImage.url})`.as("images"),
+        images: sql<string[]>`json_group_array(${ProductImage.url})`.as("images"),
       })
       .from(Product)
       .leftJoin(ProductImage, eq(Product.id, ProductImage.productId))

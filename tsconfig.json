@@ -10,9 +10,13 @@
   "compilerOptions": {
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
-    "baseUrl": ".",   
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/interfaces/*", "repositories/*", "src/components/*"] 
+      "@/*": ["src/*"],
+      "@interfaces/*": ["src/interfaces/*"],
+      "@repositories/*": ["repositories/*"],
+      "@components/*": ["src/components/*"],
+      "@actions/*": ["src/actions/*"]
     }
   }
 }
