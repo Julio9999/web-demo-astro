@@ -9,6 +9,6 @@ export interface Product {
 export interface ProductForm {
   name: string;
   price: string;
-  image: File | null;
+  image: File[] | null;
   description: string;
 }

@@ -42,7 +42,8 @@ export const AddProductForm = () => {
           type="file"
           id="image"
           accept="image/*"
-          onInput={(e) => handleFileChange(e.currentTarget.files?.[0] ?? null)}
+          multiple
+          onInput={(e) => handleFileChange(e.currentTarget.files)}
           required
           class="w-full px-4 py-2 border rounded-lg cursor-pointer"
         />

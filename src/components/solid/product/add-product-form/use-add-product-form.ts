@@ -7,7 +7,7 @@ export const useAddProductForm = () => {
   const [form, setForm] = createSignal<ProductForm>({
     name: "",
     price: "",
-    image: null,
+    image: [],
     description: "",
   });
 
@@ -17,8 +17,9 @@ export const useAddProductForm = () => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleFileChange = (file: File | null) => {
-    setForm((prev) => ({ ...prev, image: file }));
+  const handleFileChange = (files: FileList | null) => {
+    if (!files) return;
+    setForm((prev) => ({ ...prev, image: Array.from(files) }));
   };
 
   const handleSubmit = async (e: Event) => {
@@ -31,7 +32,9 @@ export const useAddProductForm = () => {
     formData.append("name", name);
     formData.append("price", price);
     formData.append("description", description || "");
-    formData.append("image", image);
+    image.forEach((file) => {
+      formData.append("image", file); 
+    });
 
     try {
       setIsLoading(true);
