@@ -1,13 +1,13 @@
-import { useAddProductForm } from "./use-add-product-form";
+import { useCreateProductForm } from "./use-create-product-form";
 
-export const AddProductForm = () => {
+export const CreateProductForm = () => {
   const {
     handleChange,
     handleSubmit,
     handleFileChange,
     form,
     isLoading
-  } = useAddProductForm();
+  } = useCreateProductForm();
 
   return (
     <form onSubmit={handleSubmit} class="flex flex-col gap-5 text-white">

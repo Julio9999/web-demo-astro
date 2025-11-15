@@ -1,8 +1,8 @@
 ---
 export const prerender = false;
+import MainLayout from "@/layouts/main-layout.astro";
 import ProductImageSlider from "@components/solid/product/product-image-slider/product-image-slider"
 import { ProductRepository } from "@repositories/product/product-repository";
-import Layout from "src/layouts/Layout.astro";
 
 const { id } = Astro.params;
 
@@ -17,7 +17,7 @@ Astro.response.headers.set(
 Astro.response.headers.set("netlify-cache-tag", `product/${id}`);
 ---
 
-<Layout>
+<MainLayout>
   <section class="max-w-6xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
     
     <div class="relative w-full overflow-hidden rounded-2xl shadow-lg">
@@ -37,4 +37,4 @@ Astro.response.headers.set("netlify-cache-tag", `product/${id}`);
       </button>
     </div>
   </section>
-</Layout>
+</MainLayout>

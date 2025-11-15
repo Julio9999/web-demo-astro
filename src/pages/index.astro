@@ -1,8 +1,8 @@
 ---
 export const prerender = false;
-import Footer from '../components/footer.astro';
+import MainLayout from '@/layouts/main-layout.astro';
 import ProductSection from '../components/product-section.astro';
-import Layout from '../layouts/Layout.astro';
+import Footer from '@/components/shared/footer.astro';
 
 const currentTime = new Date().toLocaleTimeString();
 
@@ -11,14 +11,13 @@ Astro.response.headers.set(
   "public, max-age=0, s-maxage=31536000, stale-while-revalidate=0"
 );
 
-// Header específico de Netlify CDN para cache en el Edge
 Astro.response.headers.set("netlify-cache-tag", "products");
 ---
 
-<Layout>
+<MainLayout>
 	<main class="flex-1">
 		<ProductSection />
 		<h1>The current time is: {currentTime}</h1>
 	</main>
 	<Footer />
-</Layout>
+</MainLayout>

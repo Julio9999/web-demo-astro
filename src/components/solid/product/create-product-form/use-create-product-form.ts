@@ -3,7 +3,7 @@ import { actions } from "astro:actions";
 
 import type { ProductForm } from "@/interfaces/product/product.interface";
 
-export const useAddProductForm = () => {
+export const useCreateProductForm = () => {
   const [form, setForm] = createSignal<ProductForm>({
     name: "",
     price: "",
@@ -42,7 +42,6 @@ export const useAddProductForm = () => {
       const res = await actions.createProduct(formData); 
       if (res.error) throw new Error(res.error.message);
 
-      console.log("Producto creado:", res.data);
       setForm({ name: "", price: "", image: null, description: "" });
     } catch (err) {
       console.error("Error al enviar:", err);
