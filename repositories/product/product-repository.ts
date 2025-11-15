@@ -1,6 +1,8 @@
 import { db, Product, ProductImage, sql, eq } from "astro:db";
 import { parseArrayField } from "db/utils";
 
+import type { ProductUpdate } from "./product-interfaces";
+
 export const ProductRepository = {
 
   
@@ -71,4 +73,11 @@ export const ProductRepository = {
 
     return { product, images };
   },
+
+  async updateProduct(id: number, values: ProductUpdate) {
+    return await db
+      .update(Product)
+      .set(values)
+      .where(eq(Product.id, id));
+  }
 };
