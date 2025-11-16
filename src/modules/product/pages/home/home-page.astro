@@ -1,17 +1,11 @@
 ---
-export const prerender = false
 import Footer from '@/shared/components/footer.astro';
 import MainLayout from '@/shared/layouts/main-layout.astro';
 import ProductSection from '../../components/product-section/product-section.astro';
 
 const currentTime = new Date().toLocaleTimeString();
 
-Astro.response.headers.set(
-  "Cache-Control",
-  "public, max-age=0, s-maxage=31536000, stale-while-revalidate=0"
-);
 
-Astro.response.headers.set("netlify-cache-tag", "products");
 ---
 
 <MainLayout>

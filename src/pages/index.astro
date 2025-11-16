@@ -1,6 +1,12 @@
 ---
 export const prerender = false;
 import HomePage from '@/modules/product/pages/home/home-page.astro';
+Astro.response.headers.set(
+  "Cache-Control",
+  "public, max-age=0, s-maxage=31536000, stale-while-revalidate=60"
+);
+
+Astro.response.headers.set("netlify-cache-tag", "products");
 ---
 
 <HomePage />

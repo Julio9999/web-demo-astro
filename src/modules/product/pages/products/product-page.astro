@@ -6,14 +6,6 @@ import { ProductRepository } from "@repositories/product/product-repository";
 const {id} = Astro.props;
 
 const product = await ProductRepository.getProductById(id!);
-
-
-Astro.response.headers.set(
-  "Cache-Control",
-  "public, max-age=0, s-maxage=31536000, stale-while-revalidate=0"
-);
-
-Astro.response.headers.set("netlify-cache-tag", `product/${id}`);
 ---
 
 <MainLayout>
