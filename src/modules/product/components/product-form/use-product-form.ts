@@ -1,7 +1,7 @@
 import { createSignal } from "solid-js";
 import { actions } from "astro:actions";
 
-import type { ProductForm } from "@/interfaces/product/product.interface";
+import type { ProductForm } from "@/shared/interfaces/product/product.interface";
 
 export const useProductForm = () => {
   const [form, setForm] = createSignal<ProductForm>({

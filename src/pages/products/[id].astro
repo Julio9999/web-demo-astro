@@ -1,13 +1,8 @@
 ---
 export const prerender = false;
-import MainLayout from "@/layouts/main-layout.astro";
-import ProductImageSlider from "@components/solid/product/product-image-slider/product-image-slider"
-import { ProductRepository } from "@repositories/product/product-repository";
+import ProductPage from "@/modules/product/pages/products/product-page.astro";
 
 const { id } = Astro.params;
-
-const product = await ProductRepository.getProductById(id!);
-
 
 Astro.response.headers.set(
   "Cache-Control",
@@ -17,24 +12,4 @@ Astro.response.headers.set(
 Astro.response.headers.set("netlify-cache-tag", `product/${id}`);
 ---
 
-<MainLayout>
-  <section class="max-w-6xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-    
-    <div class="relative w-full overflow-hidden rounded-2xl shadow-lg">
-      <ProductImageSlider  images={product.images} name={product.name} client:load />
-    </div>
-
-    <div class="flex flex-col gap-6">
-      <h1 class="text-3xl font-bold text-gray-900">{product.name}</h1>
-      <p class="text-gray-600 leading-relaxed">{product.description || "Sin descripción disponible."}</p>
-      
-      <div class="text-2xl font-semibold text-primary">
-        ${product.price.toLocaleString("es-ES")}
-      </div>
-
-      <button class="mt-4 bg-primary text-white px-6 py-3 rounded-xl hover:bg-primary/80 transition font-semibold cursor-pointer">
-        Añadir al carrito
-      </button>
-    </div>
-  </section>
-</MainLayout>
+<ProductPage id={id!} />

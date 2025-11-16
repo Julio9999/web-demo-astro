@@ -13,9 +13,9 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@interfaces/*": ["src/interfaces/*"],
+      "@interfaces/*": ["src/shared/interfaces/*"],
       "@repositories/*": ["repositories/*"],
-      "@components/*": ["src/components/*"],
+      "@components/*": ["src/shared/components/*"],
       "@actions/*": ["src/actions/*"]
     }
   }

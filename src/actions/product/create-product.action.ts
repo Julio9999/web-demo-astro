@@ -3,8 +3,8 @@ import { z } from "astro:schema";
 
 import { purgeCache } from "@netlify/functions";
 
-import { uploadImages } from "@/utils/upload-images/upload-images";
 import { ProductRepository } from "@repositories/product/product-repository";
+import { uploadImages } from "@/shared/utils/upload-images/upload-images";
 
 export const createProduct = defineAction({
   accept: "form",

@@ -1,0 +1,25 @@
+---
+import Footer from "@/shared/components/footer.astro";
+import { ProductForm } from "../../components/product-form/product-form";
+import MainLayout from "@/shared/layouts/main-layout.astro";
+---
+
+<MainLayout>
+  <main
+    class="min-h-screen flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-900 px-4 py-10"
+  >
+    <section
+      class="w-full max-w-md bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-8"
+    >
+      <h1
+        class="text-2xl font-bold text-center text-gray-800 dark:text-gray-100 mb-6"
+      >
+        Crear nuevo producto
+      </h1>
+
+      <ProductForm client:load />
+    </section>
+  </main>
+
+  <Footer />
+</MainLayout>
